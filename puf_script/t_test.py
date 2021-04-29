@@ -30,7 +30,7 @@ delimitedLabels = np.array(tempLabels).astype(int)
 trace_0 = traces[np.where(delimitedLabels == 0)]
 trace_1 = traces[np.where(delimitedLabels == 1)]
 
-(statistic,pvalue) = stats.ttest_ind(trace_0, trace_1, equal_var = False)
+(statistic, pvalue) = stats.ttest_ind(trace_0, trace_1, equal_var = False)
 
 plt.plot(statistic) 
 plt.ylabel('SOST value')

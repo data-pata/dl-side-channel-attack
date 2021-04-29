@@ -1,0 +1,12 @@
+name: hwsec
+channels:
+  - defaults
+dependencies:
+  - python=3.6
+  - tensorflow=1.12.0
+  - keras
+  - matplotlib
+  - ipykernel
+  - mkl-service
+  - h5py=2.10.0
+prefix: /home/ps/miniconda3/envs/hwsec

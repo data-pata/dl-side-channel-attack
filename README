@@ -1,0 +1,76 @@
+How to install:
+
+    install conda. See instructions at: https://docs.conda.io/projects/conda/en/latest/user-guide/install/linux.html
+    conda create -n tensorflow_env python=3.6
+    conda activate tensorflow_env OR source activate tensorflow_env (for older versions)
+    conda install -c conda-forge tensorflow=1.12.0
+    conda install keras
+    (conda install matplotlib)
+    
+    pip install fbs (???)
+    pip install pyqt (???)
+
+Pata notes:
+    installed with everything with 
+    conda -c condaforge [...]
+    conda install -c conda-forge ipykernel 
+
+    first testrun gave warnings, see output0.txt
+    installed mlk-service
+    changed 'val_acc' to 'val_accuracy' in training
+    
+    - install miniconda, see https://conda.io/projects/conda/en/latest/user-guide/install/index.html
+    - activate env from yml-file:
+    $ conda env create -f environment.yml
+
+How to start:
+
+    change directory to PUF_traces_and_scripts/puf_scripts
+    source activate tensorflow_env OR conda activate tensorflow_env
+    puf_training.py (to train a model)
+    puf_training.py (to test a model)           # typo? puf_testing.py
+
+--------------------------------------------------------------------------------
+
+Content of directories:
+
+1) trace directory:
+
+puf0_avg100 has 10 files, each containing 10K x 150 power traces captured
+for the PUF implementation with no extra flip-flops (FFs) for random input
+challenges C, and 10 files with the PUF's output bit responses R. Each trace is
+computed by repeating the power measurements 100 times for the same challenge C
+and taking an average (mean) of the results.  
+
+puf12_avg100 has 5 files, each containing 10K x 150 power traces captured for
+the PUF implementation with 12 extra FFs (which are added to make the
+side-channel analysis easier) for random input challenges C, and 5 files with
+the PUF's output bit responses R. Each trace is computed by repeating the power
+measurements 100 times for the same challenge C and taking the average (mean) of
+the power values.
+
+puf0_avg0_blocks_of_1000 has a file containing 100K x 150 power traces captured
+for the PUF implementation with no extra FFs and a file with the PUF's output
+bit responses R. Each trace represents a single measurement. The traces are
+captured in blocks of size 1000. In each block, all traces is captured for the
+same challenge C.
+
+2) puf_script directory:
+
+puf_training.py is for model training.
+
+puf_testing.py for model testing. Use for testing a set of traces which you did
+not use for training.
+
+t_test.py is for finding leakage points in traces.
+
+distribution_2_groups.py is for plotting distribution of 0 and 1 groups. As
+example for the trace point 88, distribution_88.pdf, is included
+
+3) Models directory:
+
+puf0 stores models for the PUF implementation with no extra FFs. An example of a
+trained model, puf0_example.h5, is included.
+
+puf12 stores models for the PUF implementation with 12 extra FFs. An example of
+a trained model, puf12_example.h5, is included.
