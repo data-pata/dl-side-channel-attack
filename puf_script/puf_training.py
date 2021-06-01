@@ -18,18 +18,6 @@ from keras.utils import to_categorical
 from keras.models import load_model
 import time
 
-################################################
-data_folder = "../traces/puf0_avg100/"
-model_folder = "../models/puf0/"
-modelName = 'puf0'
-
-#data_folder = "../traces/puf12_avg100/"
-#model_folder = "../models/puf12/"
-#modelName = 'puf12'
-
-input_size = 150
-#################################################
-
 def create_model(classes=2, input_size=150):
 	input_shape = (input_size,)
 
@@ -60,13 +48,13 @@ def check_file_exists(file_path):
 		sys.exit(-1)
 	return
 
-def load_traces():
+def load_traces(from_trace, to_trace):
 	#Import our traces
 
-	traces = np.load(data_folder+'trace.npy')
-	labels = np.load(data_folder+'label.npy')
+	traces = np.load(data_folder + 'trace' + str(from_trace) + '.npy')
+	labels = np.load(data_folder + 'label' + str(from_trace)+ '.npy')
 
-	for i in range(1,9):  
+	for i in range(from_trace+1, to_trace):  
 		tempTrace = np.load(data_folder+'trace'+str(i)+'.npy')
 		tempLabel = np.load(data_folder+'label'+str(i)+'.npy')
 
@@ -108,29 +96,56 @@ def train_model(X_profiling, Y_profiling, model, save_file_name, epochs=50, batc
 
 	history = model.fit(x=Reshaped_X_profiling, y=to_categorical(Y_profiling, num_classes=2), batch_size=batch_size, verbose=0, epochs=epochs, callbacks=[es,save_model], validation_split=0.3)
 	
-	# # summarize history for accuracy
-	# plt.plot(history.history['acc'])
-	# plt.plot(history.history['val_acc'])
-	# plt.title('model accuracy')
-	# plt.ylabel('accuracy')
-	# plt.xlabel('epoch')
-	# plt.legend(['train', 'test'], loc='upper left')
-	# # plt.savefig('../history/puf0/' + modelName + '.pdf')
-	# plt.show()
+	# summarize history for accuracy
+	plt.plot(history.history['accuracy'])
+	plt.plot(history.history['val_accuracy'])
+	plt.title('model accuracy')
+	plt.ylabel('accuracy')
+	plt.xlabel('epoch')
+	plt.legend(['train', 'test'], loc='upper left')
+	plt.savefig('../history/' + modelName + '.pdf')
+	plt.show()
 	
 	return history
 	  
+#######################################
+# TRAINING OPTIONS 
+
+# data_folder = "../traces/puf0_avg100/"
+# model_folder = "../models/puf0/"
+# modelName = 'puf0_trace_0-1_batchsize_128'
+# batch_size = 128
+# input_size = 150
+
+# data_folder = "../traces/puf12_avg100/"
+# model_folder = "../models/puf12/"
+# modelName = 'puf12'
+# batch_size = 
+# input_size = 150
+
+# data_folder = "../traces/puf0_avg0_blocks_of_1000/"
+# model_folder = "../models/puf0_avg0_blocks_of_1000/"
+# modelName = 'puf0_blocks_of_1000_trace_0-1_batchsize_64'
+# batch_size = 64
+# input_size = 150
+
+from_trace = 0;
+to_trace = 1;
+
+print('data: {:s}\nfrom trace{:d} to trace{:d} (inclusive)\nbatch size: {:d}\nsave to:{:s}'
+	.format(data_folder, from_trace, to_trace-1, batch_size, modelName))
+#######################################
 # Start of execution, the time parts are there for our own references so we know roughly how long training takes
 start = time.time()
 
 # Load the training traces
-(traces, labels) = load_traces()
+(traces, labels) = load_traces(from_trace, to_trace)
 
 ### MLP training
 
 mlp = create_model(input_size=input_size)
 
-train_model(traces, labels, mlp, model_folder+modelName, epochs=100, batch_size=128) # 32 best batch size
+train_model(traces, labels, mlp, model_folder+modelName, epochs=100, batch_size=batch_size) # 32 best batch size
 
 end = time.time()
 print("The total running time was: ",((end-start)/60), " minutes.") 

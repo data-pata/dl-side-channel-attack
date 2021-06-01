@@ -1,0 +1,47 @@
+data: ../traces/puf0_avg0_blocks_of_1000/
+from trace0 to trace0 (inclusive)
+batch size: 128
+save to:puf0_blocks_of_1000_trace_0-1_batchsize_128
+traces shape: (100000, 150)
+labels shape: (100000,)
+
+Epoch 00001: val_accuracy improved from -inf to 0.49047, saving model to ../models/puf0_avg0_blocks_of_1000/puf0_blocks_of_1000_trace_0-1_batchsize_128.h5
+Epoch 00002: val_accuracy did not improve from 0.49047
+...
+Epoch 00021: val_accuracy did not improve from 0.49047
+Epoch 00021: early stopping
+The total running time was:  0.9685149550437927  minutes.
+
+######################################################
+
+data: ../traces/puf0_avg0_blocks_of_1000/
+from trace0 to trace0 (inclusive)
+batch size: 32
+save to:puf0_blocks_of_1000_trace_0-1_batchsize_32
+traces shape: (100000, 150)
+labels shape: (100000,)
+
+Epoch 00001: val_accuracy improved from -inf to 0.43737, saving model to ../models/puf0_avg0_blocks_of_1000/puf0_blocks_of_1000_trace_0-1_batchsize_32.h5
+Epoch 00002: val_accuracy did not improve from 0.43737
+Epoch 00003: val_accuracy improved from 0.43737 to 0.44563, saving model to ../models/puf0_avg0_blocks_of_1000/puf0_blocks_of_1000_trace_0-1_batchsize_32.h5
+Epoch 00004: val_accuracy did not improve from 0.44563
+...
+Epoch 00057: val_accuracy did not improve from 0.45440
+Epoch 00057: early stopping
+The total running time was:  3.006257434686025  minutes.
+
+##########################################################
+
+from trace0 to trace0 (inclusive)
+batch size: 64
+save to:puf0_blocks_of_1000_trace_0-1_batchsize_64
+traces shape: (100000, 150)
+labels shape: (100000,)
+
+Epoch 00001: val_accuracy improved from -inf to 0.43477, saving model to ../models/puf0_avg0_blocks_of_1000/puf0_blocks_of_1000_trace_0-1_batchsize_64.h5
+...
+Epoch 00061: val_accuracy did not improve from 0.45150
+Epoch 00061: early stopping
+The total running time was:  4.240206213792165  minutes.
+
+#################################################
